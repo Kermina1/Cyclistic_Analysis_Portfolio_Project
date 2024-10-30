@@ -1,5 +1,6 @@
-# Cyclistic Bike Share Case Study
+# Cyclistic Bike-Share Case Study
 
+![Cover](assets/dataset-cover.png)
 ## Introduction
 This case study is a part of the Google Data Analytics Certificate specialization. I believe it will help me in strengthening my data analysis skills as I will be using different tools that I have learned from this specialization in addition to other courses on a real-world dataset and a real scenario.I will use these steps in my data analysis process: [Ask](README.md#L30), [Prepare](README.md#L44), [Process](README.md#L104), [Analyze](README.md#L104), [Share](README.md#L144), and [Act](README.md#L148).
 
@@ -141,7 +142,7 @@ Classic bikes and electric bikes are used by both member and casual riders, with
 - **Casual Riders**: Average ride duration is 23.04 minutes, indicating leisure usage.
 - **Member Riders**: Average ride duration is 12.28 minutes, suggesting routine trips.
 
-![Average Duration](assets/avg duration.png)
+![Average Duration](assets/avg_duration.png)
 
 ### Top Stations
 
