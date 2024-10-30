@@ -2,7 +2,7 @@
 
 ![Cover](assets/dataset-cover.png)
 ## Introduction
-This case study is a part of the Google Data Analytics Certificate specialization. I believe it will help me in strengthening my data analysis skills as I will be using different tools that I have learned from this specialization in addition to other courses on a real-world dataset and a real scenario.I will use these steps in my data analysis process: [Ask](README.md#L30), [Prepare](README.md#L44), [Process](README.md#L104), [Analyze](README.md#L104), [Share](README.md#L144), and [Act](README.md#L148).
+This case study is a part of the Google Data Analytics Certificate specialization. I believe it will help me in strengthening my data analysis skills as I will be using different tools that I have learned from this specialization in addition to other courses on a real-world dataset and a real scenario.I will use these steps in my data analysis process: [Ask](README.md#ask), [Prepare](README.md#prepare), [Process](README.md#process), [Analyze](README.md#analyze), [Share](README.md#share), and [Act](README.md#act).
 
 ### Quick Links
 Online Data Sourcs: 
