@@ -43,7 +43,7 @@ I will address the following key questions:
 - **Cyclistic Executive Team**: who will decide whether or not to approve the recommended marketing program.
 
 ## Prepare
-For this case study, I will be using Cyclistic historical trip data from Jan 2023 to Dec 2023, which has been made available online by Motivate International Inc. under the license. The data was prepared and downloaded in 12 CSV files, one for each month. Each file contains 13 columns which are:
+For this case study, I will be using Cyclistic historical trip data from Jan 2023 to Dec 2023, which has been made available online by Motivate International Inc. under the [License](https://divvybikes.com/data-license-agreement). The data was prepared and downloaded in 12 CSV files, one for each month. Each file contains 13 columns which are:
 
 - `ride_id`: ID for each ride
 - `rideable_type`: Type of bikes used (electric_bike, classic_bike, docked_bike)
@@ -63,9 +63,11 @@ For this case study, I will be using Cyclistic historical trip data from Jan 202
 Given that the dataset contains over 2,000,000 rows, Excel isn’t suited to handle it efficiently. Instead, we chose Microsoft SQL Server for data manipulation, as it is built to manage and process large datasets effectively. In this step we imported, combined and cleaned data to be ready for analysis.
 
 ### A) Data Combining
+SQL Queries: [Data Combining](data_combining.sql)
+
 The data was initially spread across multiple Excel files, so we needed to consolidate them in Microsoft SQL Server. To start, we created a database named “Cyclistic_data” and imported all 12 Excel files into this database. Next, we created a staging table called “CyclisticStagingTable” to merge the data from all 12 files into one comprehensive table. This approach enabled efficient management and analysis of the data as a single, unified dataset.
 ```sql
--- Creat staging table to combine the tables.
+-- Create staging table to combine the tables.
 
 CREATE TABLE CyclisticStagingTable (
     ride_id VARCHAR(255),   
@@ -126,6 +128,8 @@ SELECT TOP 5 *
 FROM CyclisticStagingTable
 ```
 ### Data Exploration
+SQL Queries: [Data Exploration](data_exploration.sql)
+
 Before analyzing the data, we need to familiarize ourselves with it. Our data contains 13 columns with the `ride_id` as the unique column, which is our primary key, and 5,719,877 records. We did the following steps to ensure our data is ready for analysis:
 
 #### Duplicated Values
@@ -151,6 +155,8 @@ We checked for outliers that could shift our data results:
 We found 6,333 rides that took more than 24 hrs. and 88,950 rides that took less than a minute. These rides were removed.
 
 ### B) Data Cleaning
+SQL Queries: [Data Cleaning](data_cleaning.sql)
+
 We created another table called `cyclistic_tbl` with all cleaned data by removing all null values and outliers as it’s a case study and we can’t ask the company about these anomalies. The new table also included newly created columns needed for the analysis, such as:
 
 - `ride_length`: the length of each ride
@@ -196,6 +202,8 @@ WHERE start_station_name IS NOT NULL
 ```
 
 ## Analyze
+SQL Queries: [Data Analysis](data_analysis.sql)
+
 We used SQL to analyze trends and distinguish behavioral patterns between member and casual riders. Power BI was then utilized to visualize these insights, enabling a clear and interactive presentation of the findings.
 
 ### Total Rides in 2023
