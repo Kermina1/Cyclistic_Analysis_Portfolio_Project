@@ -64,7 +64,67 @@ Given that the dataset contains over 2,000,000 rows, Excel isn’t suited to han
 
 ### A) Data Combining
 The data was initially spread across multiple Excel files, so we needed to consolidate them in Microsoft SQL Server. To start, we created a database named “Cyclistic_data” and imported all 12 Excel files into this database. Next, we created a staging table called “CyclisticStagingTable” to merge the data from all 12 files into one comprehensive table. This approach enabled efficient management and analysis of the data as a single, unified dataset.
+```sql
+-- Creat staging table to combine the tables.
 
+CREATE TABLE CyclisticStagingTable (
+    ride_id VARCHAR(255),   
+    rideable_type VARCHAR(255),
+    started_at DATETIME,
+    ended_at DATETIME,
+    start_station_name VARCHAR(255),
+    start_station_id VARCHAR(255),
+    end_station_name VARCHAR(255),
+    end_station_id VARCHAR(255),
+    start_lat FLOAT,
+    start_lng FLOAT,
+    end_lat FLOAT,
+    end_lng FLOAT,
+    member_casual VARCHAR(255)
+);
+```
+```sql
+-- Insert data into the staging table.
+INSERT INTO CyclisticStagingTable
+SELECT * 
+FROM tripdata_202301
+UNION ALL 
+SELECT * 
+FROM tripdata_202302
+UNION ALL 
+SELECT * 
+FROM tripdata_202303
+UNION ALL 
+SELECT * 
+FROM tripdata_202304
+UNION ALL 
+SELECT * 
+FROM tripdata_202305
+UNION ALL 
+SELECT * 
+FROM tripdata_202306
+UNION ALL 
+SELECT * 
+FROM tripdata_202307
+UNION ALL 
+SELECT * 
+FROM tripdata_202308
+UNION ALL 
+SELECT * 
+FROM tripdata_202309
+UNION ALL 
+SELECT * 
+FROM tripdata_202310
+UNION ALL 
+SELECT * 
+FROM tripdata_202311
+UNION ALL 
+SELECT * 
+FROM tripdata_202312;
+
+SELECT TOP 5 * 
+FROM CyclisticStagingTable
+```
 ### Data Exploration
 Before analyzing the data, we need to familiarize ourselves with it. Our data contains 13 columns with the `ride_id` as the unique column, which is our primary key, and 5,719,877 records. We did the following steps to ensure our data is ready for analysis:
 
@@ -101,6 +161,39 @@ We created another table called `cyclistic_tbl` with all cleaned data by removin
 - `ride_year`: the year of the ride
 
 1,439,662 records were removed, and now the data is cleaned, including all necessary columns, and is ready to be analyzed.
+```sql
+-- Create new table with cleaned data.
+SELECT 
+ride_id,
+rideable_type AS bike_type,
+started_at,
+ended_at,
+DATEDIFF(minute,started_at,ended_at) AS ride_length,
+DATEPART(WEEKDAY, started_at) AS day_of_week,
+DATENAME(WEEKDAY, started_at) AS day_name,
+DATEPART(MONTH, started_at) AS ride_month,
+DATENAME(MONTH, started_at) AS month_name,
+DATEPART(YEAR, started_at) AS ride_year,
+start_station_name,
+start_station_id,
+end_station_name,
+end_station_id,
+start_lat,
+start_lng,
+end_lat,
+end_lng,
+member_casual AS rider_type
+INTO cyclistic_tbl
+FROM CyclisticStagingTable
+WHERE start_station_name IS NOT NULL
+   AND start_station_id IS NOT NULL
+   AND end_station_name IS NOT NULL
+   AND end_station_id IS NOT NULL
+   AND end_lat IS NOT NULL
+   AND end_lng IS NOT NULL -- Remove all null values.
+   AND DATEDIFF(MINUTE, started_at, ended_at) >= 1 -- remove rides less than a min.
+   AND DATEDIFF(MINUTE, started_at, ended_at) <= 1440; -- remove rides more than 24hrs.
+```
 
 ## Analyze
 We used SQL to analyze trends and distinguish behavioral patterns between member and casual riders. Power BI was then utilized to visualize these insights, enabling a clear and interactive presentation of the findings.
